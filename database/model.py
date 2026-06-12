@@ -28,3 +28,13 @@ class TravelManagement(db.Model):
         db.String(50),
         nullable=False
     )
+    
+    def to_dic(self):
+        return{
+            "id":self.id,
+            "destination": self.destination,
+            "price":self.price,
+            "platform":self.platform,
+            "rating":self.rating,
+            "travel_type":self.travel_type,
+        }
