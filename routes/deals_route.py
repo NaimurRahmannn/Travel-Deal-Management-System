@@ -1,5 +1,6 @@
-from flask import Blueprint,jsonify,request
+from flask import Blueprint, jsonify, request
 from services.deals_service import create_deal, get_all_deal, get_deal_by_id
+
 deals_bp = Blueprint("deals", __name__)
 
 
@@ -18,9 +19,11 @@ def list_deals():
     return jsonify([d.to_dic() for d in deals]), 200
 
 
-@deals_bp.route("/<int:deal_id>", methods=["GET"])
-def single_deals(deal_id):
-    deal = get_deal_by_id(deal_id)
+@deals_bp.route("/<deal_id>", methods=["GET"]) 
+def single_deal(deal_id):
+    if not deal_id.isdigit():
+        return jsonify({"error": "deal_id must be an integer"}), 400
+    deal = get_deal_by_id(int(deal_id))
     if not deal:
-            return jsonify({"error": "Deal not found"}), 404
+        return jsonify({"error": "Deal not found"}), 404
     return jsonify(deal.to_dic()), 200

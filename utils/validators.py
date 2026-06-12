@@ -1,5 +1,5 @@
-
 VALID_TYPES = {"Budget", "Luxury", "Adventure", "Family"}
+
 
 def validate_deal(data):
     if not data:

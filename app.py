@@ -4,8 +4,11 @@ from routes.deals_route import deals_bp
 from database.model import db
 
 app = Flask(__name__)
+
 app.config.from_object(Config)
+
 app.register_blueprint(deals_bp, url_prefix="/deals")
+
 db.init_app(app)
 
 with app.app_context():
