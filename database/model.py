@@ -28,7 +28,7 @@ class TravelManagement(db.Model):
         db.String(50),
         nullable=False
     )
-    
+    # convert model object to dictionary
     def to_dic(self):
         return{
             "id":self.id,
