@@ -2,7 +2,7 @@ from database.model import db, TravelManagement
 from utils.validators import validate_deal
 
 
-def create(data):
+def create_deal(data):
     error=validate_deal(data)
     if error:
         return None, error
@@ -18,8 +18,8 @@ def create(data):
     return deal, None
 
 
-def get_all():
+def get_all_deal():
     return TravelManagement.query.all()
 
-def get_by_id(deals_id):
+def get_deal_by_id(deals_id):
     return TravelManagement.query.get(deals_id)

@@ -1,18 +1,26 @@
-from flask import Blueprint
-
+from flask import Blueprint,jsonify,request
+from services.deals_service import create_deal, get_all_deal, get_deal_by_id
 deals_bp = Blueprint("deals", __name__)
 
 
 @deals_bp.route("/", methods=["POST"])
 def add_deals():
-    return {"msg": "Add deals"}
+    data = request.get_json()
+    deal, error = create_deal(data)
+    if error:
+        return jsonify({"error": error}), 400
+    return jsonify(deal.to_dic()), 201
 
 
 @deals_bp.route("/", methods=["GET"])
 def list_deals():
-    return {"msg": "Get all deals"}
+    deals = get_all_deal()
+    return jsonify([d.to_dic() for d in deals]), 200
 
 
 @deals_bp.route("/<int:deal_id>", methods=["GET"])
 def single_deals(deal_id):
-    return {"msg": "Get single deals"}
+    deal = get_deal_by_id(deal_id)
+    if not deal:
+            return jsonify({"error": "Deal not found"}), 404
+    return jsonify(deal.to_dic()), 200

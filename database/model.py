@@ -16,15 +16,15 @@ class TravelManagement(db.Model):
         db.Float,
         nullable=False
     )
-    platform=db.coloumn(
+    platform=db.Column(
         db.String(100),
         nullable=False
     )
-    rating=db.column(
+    rating=db.Column(
         db.Float,
         nullable=True
     )
-    travel_type=db.column(
+    travel_type=db.Column(
         db.String(50),
         nullable=False
     )
