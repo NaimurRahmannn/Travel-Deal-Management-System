@@ -1,0 +1,74 @@
+{
+	"info": {
+		"_postman_id": "19bcb67b-9777-491c-8763-cbc78c11b790",
+		"name": "Postman Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "55862842",
+		"_collection_link": "https://naimurrahmanlamm-437180.postman.co/workspace/Naimur-Rahman's-Workspace~1caa2940-8ff6-480b-8046-36af7ebc943c/collection/55862842-19bcb67b-9777-491c-8763-cbc78c11b790?action=share&source=collection_link&creator=55862842"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{​\n\"destination\": \"Dubai\",​\n\"price\": 5000,​\n\"platform\": \"Booking\",​\n\"rating\": 4.5,​\n\"travel_type\": \"Luxury\"​\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/deals",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"deals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
