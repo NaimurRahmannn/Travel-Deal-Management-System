@@ -36,7 +36,65 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"destination\": \"Nepal\",\n    \"price\": 5000,\n    \"platform\": \"Booking\",\n    \"rating\": 4.5,\n    \"travel_type\": \"Luxury\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/deals",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deals"
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.1.8 Python/3.12.3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 12 Jun 2026 11:52:52 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "128"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"destination\": \"Nepal\",\n    \"id\": 7,\n    \"platform\": \"Booking\",\n    \"price\": 5000,\n    \"rating\": 4.5,\n    \"travel_type\": \"Luxury\"\n}"
+				}
+			]
 		},
 		{
 			"name": "New Request",
@@ -44,7 +102,56 @@
 				"method": "GET",
 				"header": []
 			},
-			"response": []
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/deals",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deals"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.1.8 Python/3.12.3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 12 Jun 2026 11:53:12 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1018"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"destination\": \"Dubai\",\n        \"id\": 1,\n        \"platform\": \"Booking\",\n        \"price\": 5000,\n        \"rating\": 4.5,\n        \"travel_type\": \"Luxury\"\n    },\n    {\n        \"destination\": \"Dubai\",\n        \"id\": 2,\n        \"platform\": \"Booking\",\n        \"price\": 5000,\n        \"rating\": 4.5,\n        \"travel_type\": \"Luxury\"\n    },\n    {\n        \"destination\": \"Dubai\",\n        \"id\": 3,\n        \"platform\": \"Booking\",\n        \"price\": 5000,\n        \"rating\": 4.5,\n        \"travel_type\": \"Luxury\"\n    },\n    {\n        \"destination\": \"Dubai\",\n        \"id\": 4,\n        \"platform\": \"Booking\",\n        \"price\": 5000,\n        \"rating\": 4.5,\n        \"travel_type\": \"Luxury\"\n    },\n    {\n        \"destination\": \"Dubai\",\n        \"id\": 5,\n        \"platform\": \"Booking\",\n        \"price\": 5000,\n        \"rating\": 4.5,\n        \"travel_type\": \"Luxury\"\n    },\n    {\n        \"destination\": \"Dubai\",\n        \"id\": 6,\n        \"platform\": \"Booking\",\n        \"price\": 5000,\n        \"rating\": 4.5,\n        \"travel_type\": \"Luxury\"\n    },\n    {\n        \"destination\": \"Nepal\",\n        \"id\": 7,\n        \"platform\": \"Booking\",\n        \"price\": 5000,\n        \"rating\": 4.5,\n        \"travel_type\": \"Luxury\"\n    }\n]"
+				}
+			]
 		},
 		{
 			"name": "New Request",
@@ -52,7 +159,53 @@
 				"method": "GET",
 				"header": []
 			},
-			"response": []
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.1.8 Python/3.12.3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 12 Jun 2026 11:53:26 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "30"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"msg\": \"App is running\"\n}"
+				}
+			]
 		},
 		{
 			"name": "New Request",
@@ -60,7 +213,66 @@
 				"method": "GET",
 				"header": []
 			},
-			"response": []
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/deals/abc",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deals",
+								"abc"
+							]
+						}
+					},
+					"status": "BAD REQUEST",
+					"code": 400,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.1.8 Python/3.12.3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 12 Jun 2026 11:53:35 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "44"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"deal_id must be an integer\"\n}"
+				}
+			]
 		},
 		{
 			"name": "New Request",
@@ -68,7 +280,61 @@
 				"method": "GET",
 				"header": []
 			},
-			"response": []
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{​\n\"destination\": \"Dubai\",​\n\"price\": 5000,​\n\"platform\": \"Booking\",​\n\"rating\": 4.5,​\n\"travel_type\": \"Luxury\"​\n}\n"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/deals/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"deals",
+								"2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/3.1.8 Python/3.12.3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 12 Jun 2026 11:53:44 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "128"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"destination\": \"Dubai\",\n    \"id\": 2,\n    \"platform\": \"Booking\",\n    \"price\": 5000,\n    \"rating\": 4.5,\n    \"travel_type\": \"Luxury\"\n}"
+				}
+			]
 		}
 	]
 }
