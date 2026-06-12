@@ -1,0 +1,4 @@
+class Config:
+    SQLALCHEMY_DATABASE_URI = "sqlite:///your db name"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    DEBUG = True
