@@ -5,10 +5,12 @@ from services.deals_service import (
     get_deal_by_id,
     search_deals,
     filter_deals_by_budget,
-    sort_deals
+    sort_deals,
+    get_recent_deals,
+    track_recent,
 )
 from utils.logger import logger
-from utils.validators import validate_price_range,validate_sort_params
+from utils.validators import validate_price_range, validate_sort_params
 
 deals_bp = Blueprint("deals", __name__)
 
@@ -44,6 +46,8 @@ def single_deal(deal_id):
     deal = get_deal_by_id(int(deal_id))
     if not deal:
         return jsonify({"error": "Deal not found"}), 404
+    track_recent(deal)
+    logger.info(f"Deal {deal_id} viewed")
     return jsonify(deal.to_dic()), 200
 
 
@@ -109,3 +113,10 @@ def sort():
         results.append(d.to_dic())
 
     return jsonify({"count": len(deals), "results": results}), 200
+
+
+@deals_bp.route("/recent", methods=["GET"])
+def recent():
+    logger.info("Recent deals requested")
+    deals = get_recent_deals()
+    return jsonify({"count": len(deals), "results": deals}), 200
