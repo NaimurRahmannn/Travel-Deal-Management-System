@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from config import Config
 from routes.deals_route import deals_bp
 from database.model import db
@@ -18,6 +18,26 @@ with app.app_context():
 @app.route("/")
 def home():
     return {"msg": "App is running"}
+
+
+@app.errorhandler(400)
+def bad_request(_error):
+    return jsonify({"error": "Bad request"}), 400
+
+
+@app.errorhandler(404)
+def not_found(_error):
+    return jsonify({"error": "Resource not found"}), 404
+
+
+@app.errorhandler(405)
+def method_not_allowed(_error):
+    return jsonify({"error": "Method not allowed for this endpoint"}), 405
+
+
+@app.errorhandler(500)
+def internal_error(_error):
+    return jsonify({"error": "Internal server error"}), 500
 
 
 if __name__ == "__main__":
