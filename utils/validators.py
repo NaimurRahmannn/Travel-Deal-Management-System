@@ -1,5 +1,6 @@
 VALID_TYPES = {"Budget", "Luxury", "Adventure", "Family"}
-
+SORTABLE_FIELDS = {"price", "rating", "destination", "travel_type", "platform", "id"}
+VALID_ORDERS = {"asc", "desc"}
 
 def validate_deal(data):
     if not data:
@@ -21,4 +22,20 @@ def validate_deal(data):
             return "rating must be between 1 and 5"
     if data.get("travel_type") not in VALID_TYPES:
         return "travel_type must be one of: Budget, Luxury, Adventure, Family"
+    return None
+
+def validate_price_range(min_price, max_price):
+    if min_price is not None and min_price < 0:
+        return "min_price cannot be negative"
+    if max_price is not None and max_price < 0:
+        return "max_price cannot be negative"
+    if min_price is not None and max_price is not None and max_price < min_price:
+        return "max_price cannot be smaller than min_price"
+    return None
+
+def validate_sort_params(sort_by, order):
+    if sort_by not in SORTABLE_FIELDS:
+        return f"Invalid sort field. Allowed: {', '.join(sorted(SORTABLE_FIELDS))}"
+    if order not in VALID_ORDERS:
+        return "order must be 'asc' or 'desc'"
     return None
