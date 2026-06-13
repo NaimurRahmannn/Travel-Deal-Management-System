@@ -4,8 +4,10 @@ from services.deals_service import (
     get_all_deal,
     get_deal_by_id,
     search_deals,
+    filter_deals_by_budget
 )
 from utils.logger import logger
+from utils.validators import validate_price_range
 
 deals_bp = Blueprint("deals", __name__)
 
@@ -71,3 +73,19 @@ def search():
         results.append(d.to_dic())
 
     return jsonify({"count": len(deals), "results": results}), 200
+
+
+@deals_bp.route("/filter", methods=["GET"])
+def filter_deals():
+    min_price = request.args.get("min_price", type=float)
+    max_price = request.args.get("max_price", type=float)
+
+    error = validate_price_range(min_price, max_price)
+    if error:
+        logger.warning(f"Invalid filter request: {error}")
+        return jsonify({"error": error}), 400
+
+    logger.info(f"Filter request: min_price={min_price}, max_price={max_price}")
+    deals = filter_deals_by_budget(min_price, max_price)
+    logger.info(f"Filter successful: {len(deals)} deal(s) found")
+    return jsonify({"count": len(deals), "results": [d.to_dic() for d in deals]}), 200

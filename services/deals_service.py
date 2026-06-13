@@ -3,8 +3,9 @@ from sqlalchemy.exc import SQLAlchemyError
 from database.model import db, TravelManagement
 from utils.validators import validate_deal
 
+
 def create_deal(data):
-    error=validate_deal(data)
+    error = validate_deal(data)
     if error:
         return None, error
     deal = TravelManagement(
@@ -13,7 +14,7 @@ def create_deal(data):
         platform=data["platform"],
         rating=data.get("rating"),
         travel_type=data["travel_type"],
-        )
+    )
     try:
         db.session.add(deal)
         db.session.commit()
@@ -26,18 +27,45 @@ def create_deal(data):
 def get_all_deal():
     return TravelManagement.query.all()
 
+
 def get_deal_by_id(deals_id):
     return TravelManagement.query.get(deals_id)
 
-def apply_filters(query,destination=None,platform=None, travel_type=None):
+
+def apply_filters(
+    query,
+    destination=None,
+    platform=None,
+    travel_type=None,
+    min_price=None,
+    max_price=None,
+):
     if destination:
-       query = query.filter(TravelManagement.destination.ilike(f"%{destination}%"))
+        query = query.filter(TravelManagement.destination.ilike(f"%{destination}%"))
     if platform:
         query = query.filter(TravelManagement.platform.ilike(f"%{platform}%"))
     if travel_type:
         query = query.filter(TravelManagement.travel_type.ilike(f"%{travel_type}%"))
+    if min_price is not None:
+        query = query.filter(TravelManagement.price >= min_price)
+    if max_price is not None:
+        query = query.filter(TravelManagement.price <= max_price)
     return query
 
-def search_deals(destination=None,platform=None,travel_type=None):
-    query=apply_filters(TravelManagement.query,destination=destination,platform=platform,travel_type=travel_type)
+
+def search_deals(destination=None, platform=None, travel_type=None):
+    query = apply_filters(
+        TravelManagement.query,
+        destination=destination,
+        platform=platform,
+        travel_type=travel_type,
+    )
+    return query.all()
+
+def filter_deals_by_budget(min_price=None, max_price=None):
+    query = apply_filters(
+        TravelManagement.query,
+        min_price=min_price,
+        max_price=max_price,
+    )
     return query.all()
