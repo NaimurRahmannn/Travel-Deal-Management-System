@@ -38,3 +38,25 @@ class TravelManagement(db.Model):
             "rating":self.rating,
             "travel_type":self.travel_type,
         }
+        
+class RecentView(db.Model):
+    __tablename__ = "recent_views"
+    id = db.Column(db.Integer, primary_key=True)
+    deal_id = db.Column(
+        db.Integer,
+        db.ForeignKey("travel_management.id"),
+        nullable=False,
+        unique=True
+    )
+    viewed_at = db.Column(
+        db.DateTime,
+        server_default=db.func.now(),
+        nullable=False
+    )
+
+    def to_dic(self):
+        return {
+            "id": self.id,
+            "deal_id": self.deal_id,
+            "viewed_at": self.viewed_at.isoformat() if self.viewed_at else None,
+        }

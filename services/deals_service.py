@@ -4,6 +4,7 @@ from database.model import db, TravelManagement
 from utils.validators import validate_deal
 from sqlalchemy import asc, desc
 
+
 def create_deal(data):
     error = validate_deal(data)
     if error:
@@ -31,7 +32,7 @@ def get_all_deal():
 def get_deal_by_id(deals_id):
     return TravelManagement.query.get(deals_id)
 
-
+#shared filtering helper
 def apply_filters(
     query,
     destination=None,
@@ -74,3 +75,4 @@ def sort_deals(sort_by, order):
     column = getattr(TravelManagement, sort_by)
     direction = asc(column) if order == "asc" else desc(column)
     return TravelManagement.query.order_by(direction).all()
+

@@ -91,6 +91,7 @@ def filter_deals():
     logger.info(f"Filter successful: {len(deals)} deal(s) found")
     return jsonify({"count": len(deals), "results": [d.to_dic() for d in deals]}), 200
 
+
 @deals_bp.route("/sort", methods=["GET"])
 def sort():
     sort_by = request.args.get("sort_by", "price")
