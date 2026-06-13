@@ -1,6 +1,6 @@
 from sqlalchemy.exc import SQLAlchemyError
 
-from database.model import db, TravelManagement
+from database.model import db, TravelManagement,RecentView
 from utils.validators import validate_deal
 from sqlalchemy import asc, desc
 
@@ -75,4 +75,21 @@ def sort_deals(sort_by, order):
     column = getattr(TravelManagement, sort_by)
     direction = asc(column) if order == "asc" else desc(column)
     return TravelManagement.query.order_by(direction).all()
+
+
+
+def track_recent(deal):
+    # Remove the old deal first to avoid duplicates
+    RecentView.query.filter_by(deal_id=deal.id).delete()
+    db.session.add(RecentView(deal_id=deal.id))
+    db.session.commit()
+
+def get_recent_deals():
+    recents = RecentView.query.order_by(RecentView.viewed_at.desc()).limit(10).all()
+    deals = []
+    for r in recents:
+        deal = TravelManagement.query.get(r.deal_id)
+        if deal:
+            deals.append(deal.to_dic())
+    return deals
 
