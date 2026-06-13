@@ -6,6 +6,8 @@ def validate_deal(data):
         return "Request body is required"
     if not data.get("destination"):
         return "destination cannot be empty"
+    if not data.get("platform"):
+        return "platform cannot be empty"
     price = data.get("price")
     if price is None or isinstance(price, bool) or not isinstance(price, (int, float)):
         return "price must be a number"
