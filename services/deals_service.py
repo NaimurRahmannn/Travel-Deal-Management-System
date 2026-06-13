@@ -80,8 +80,7 @@ def sort_deals(sort_by, order):
 
 
 def track_recent(deal):
-    # Tracking is a best-effort side effect; never let it break the
-    # response for a deal that was successfully fetched.
+
     try:
         # Remove the old deal first to avoid duplicates
         RecentView.query.filter_by(deal_id=deal.id).delete()

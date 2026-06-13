@@ -10,7 +10,7 @@ from services.deals_service import (
     track_recent,
 )
 from utils.logger import logger
-from utils.validators import validate_price_range, validate_sort_params
+from utils.validators import parse_price, validate_price_range, validate_sort_params
 
 deals_bp = Blueprint("deals", __name__)
 
@@ -82,8 +82,14 @@ def search():
 
 @deals_bp.route("/filter", methods=["GET"])
 def filter_deals():
-    min_price = request.args.get("min_price", type=float)
-    max_price = request.args.get("max_price", type=float)
+    min_price, error = parse_price(request.args.get("min_price"), "min_price")
+    if error:
+        logger.warning(f"Invalid filter request: {error}")
+        return jsonify({"error": error}), 400
+    max_price, error = parse_price(request.args.get("max_price"), "max_price")
+    if error:
+        logger.warning(f"Invalid filter request: {error}")
+        return jsonify({"error": error}), 400
 
     error = validate_price_range(min_price, max_price)
     if error:

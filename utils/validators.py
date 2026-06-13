@@ -24,6 +24,14 @@ def validate_deal(data):
         return "travel_type must be one of: Budget, Luxury, Adventure, Family"
     return None
 
+def parse_price(raw_value, field_name):
+    if raw_value is None:
+        return None, None
+    try:
+        return float(raw_value), None
+    except (TypeError, ValueError):
+        return None, f"{field_name} must be a number"
+
 def validate_price_range(min_price, max_price):
     if min_price is not None and min_price < 0:
         return "min_price cannot be negative"
