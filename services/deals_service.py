@@ -2,6 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from database.model import db, TravelManagement,RecentView
 from utils.validators import validate_deal
+from utils.logger import logger
 from sqlalchemy import asc, desc
 
 
@@ -79,10 +80,16 @@ def sort_deals(sort_by, order):
 
 
 def track_recent(deal):
-    # Remove the old deal first to avoid duplicates
-    RecentView.query.filter_by(deal_id=deal.id).delete()
-    db.session.add(RecentView(deal_id=deal.id))
-    db.session.commit()
+    # Tracking is a best-effort side effect; never let it break the
+    # response for a deal that was successfully fetched.
+    try:
+        # Remove the old deal first to avoid duplicates
+        RecentView.query.filter_by(deal_id=deal.id).delete()
+        db.session.add(RecentView(deal_id=deal.id))
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
+        logger.warning(f"Could not track recent view for deal {deal.id}")
 
 def get_recent_deals():
     recents = RecentView.query.order_by(RecentView.viewed_at.desc()).limit(10).all()
