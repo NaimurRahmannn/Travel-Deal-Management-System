@@ -2,7 +2,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from database.model import db, TravelManagement
 from utils.validators import validate_deal
-
+from sqlalchemy import asc, desc
 
 def create_deal(data):
     error = validate_deal(data)
@@ -69,3 +69,8 @@ def filter_deals_by_budget(min_price=None, max_price=None):
         max_price=max_price,
     )
     return query.all()
+
+def sort_deals(sort_by, order):
+    column = getattr(TravelManagement, sort_by)
+    direction = asc(column) if order == "asc" else desc(column)
+    return TravelManagement.query.order_by(direction).all()
