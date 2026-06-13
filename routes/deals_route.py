@@ -47,19 +47,27 @@ def single_deal(deal_id):
 @deals_bp.route("/search", methods=["GET"])
 def search():
     destination = request.args.get("destination")
+    platform = request.args.get("platform")
+    travel_type = request.args.get("travel_type")
+    if not any([destination, platform, travel_type]):
+        return (
+            jsonify(
+                {
+                    "error": "Provide at least one search parameter "
+                    "(destination, platform, or travel_type)"
+                }
+            ),
+            400,
+        )
 
-    if not destination:
-        logger.warning("Search called with no destination")
-        return jsonify({"error": "Provide a destination to search"}), 400
-
-    logger.info(f"Search request: destination={destination}")
-    deals = search_deals(destination)
+    logger.info(
+        f"Search request: destination={destination},"
+        f"platform={platform}, travel_type={travel_type}"
+    )
+    deals = search_deals(destination, platform, travel_type)
     logger.info(f"Search successful: {len(deals)} deal(s) found")
     results = []
     for d in deals:
         results.append(d.to_dic())
 
-    return jsonify({
-        "count": len(deals),
-        "results": results
-    }), 200
+    return jsonify({"count": len(deals), "results": results}), 200

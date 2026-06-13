@@ -29,11 +29,15 @@ def get_all_deal():
 def get_deal_by_id(deals_id):
     return TravelManagement.query.get(deals_id)
 
-def apply_filters(query,destination=None):
+def apply_filters(query,destination=None,platform=None, travel_type=None):
     if destination:
        query = query.filter(TravelManagement.destination.ilike(f"%{destination}%"))
+    if platform:
+        query = query.filter(TravelManagement.platform.ilike(f"%{platform}%"))
+    if travel_type:
+        query = query.filter(TravelManagement.travel_type.ilike(f"%{travel_type}%"))
     return query
 
-def search_deals(destination=None):
-    query=apply_filters(TravelManagement.query,destination=destination)
+def search_deals(destination=None,platform=None,travel_type=None):
+    query=apply_filters(TravelManagement.query,destination=destination,platform=platform,travel_type=travel_type)
     return query.all()
