@@ -6,7 +6,9 @@ deals_bp = Blueprint("deals", __name__)
 
 @deals_bp.route("/", methods=["POST"])
 def add_deals():
-    data = request.get_json()
+    data = request.get_json(silent=True)
+    if data is None:
+        return jsonify({"error": "Request body must be valid JSON with Content-Type: application/json"}), 400
     deal, error = create_deal(data)
     if error:
         return jsonify({"error": error}), 400
