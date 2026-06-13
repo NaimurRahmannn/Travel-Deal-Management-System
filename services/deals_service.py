@@ -1,3 +1,5 @@
+from sqlalchemy.exc import SQLAlchemyError
+
 from database.model import db, TravelManagement
 from utils.validators import validate_deal
 
@@ -13,8 +15,12 @@ def create_deal(data):
         rating=data.get("rating"),
         travel_type=data["travel_type"],
         )
-    db.session.add(deal)
-    db.session.commit()
+    try:
+        db.session.add(deal)
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
+        return None, "Could not save the deal, please try again"
     return deal, None
 
 
