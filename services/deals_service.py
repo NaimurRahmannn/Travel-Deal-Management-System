@@ -3,7 +3,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from database.model import db, TravelManagement
 from utils.validators import validate_deal
 
-
 def create_deal(data):
     error=validate_deal(data)
     if error:
@@ -29,3 +28,12 @@ def get_all_deal():
 
 def get_deal_by_id(deals_id):
     return TravelManagement.query.get(deals_id)
+
+def apply_filters(query,destination=None):
+    if destination:
+       query = query.filter(TravelManagement.destination.ilike(f"%{destination}%"))
+    return query
+
+def search_deals(destination=None):
+    query=apply_filters(TravelManagement.query,destination=destination)
+    return query.all()
