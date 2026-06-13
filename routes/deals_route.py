@@ -4,10 +4,11 @@ from services.deals_service import (
     get_all_deal,
     get_deal_by_id,
     search_deals,
-    filter_deals_by_budget
+    filter_deals_by_budget,
+    sort_deals
 )
 from utils.logger import logger
-from utils.validators import validate_price_range
+from utils.validators import validate_price_range,validate_sort_params
 
 deals_bp = Blueprint("deals", __name__)
 
@@ -89,3 +90,21 @@ def filter_deals():
     deals = filter_deals_by_budget(min_price, max_price)
     logger.info(f"Filter successful: {len(deals)} deal(s) found")
     return jsonify({"count": len(deals), "results": [d.to_dic() for d in deals]}), 200
+
+@deals_bp.route("/sort", methods=["GET"])
+def sort():
+    sort_by = request.args.get("sort_by", "price")
+    order = request.args.get("order", "asc")
+
+    error = validate_sort_params(sort_by, order)
+    if error:
+        logger.warning(f"Invalid sort request: {error}")
+        return jsonify({"error": error}), 400
+
+    logger.info(f"Sort request: sort_by={sort_by}, order={order}")
+    deals = sort_deals(sort_by, order)
+    results = []
+    for d in deals:
+        results.append(d.to_dic())
+
+    return jsonify({"count": len(deals), "results": results}), 200
