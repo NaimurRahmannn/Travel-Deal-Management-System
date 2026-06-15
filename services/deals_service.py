@@ -33,6 +33,29 @@ def get_all_deal():
 def get_deal_by_id(deals_id):
     return TravelManagement.query.get(deals_id)
 
+
+def update_deal(deal_id, data):
+    error = validate_deal(data)
+    if error:
+        return None, error
+    deal = TravelManagement.query.get(deal_id)
+    if not deal:
+        return None, "not found"
+
+    deal.destination = data["destination"]
+    deal.price = data["price"]
+    deal.platform = data["platform"]
+    deal.rating = data.get("rating")
+    deal.travel_type = data["travel_type"]
+
+    try:
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
+        return None, "Could not update the deal, please try again"
+
+    return deal, None
+
 #shared filtering helper
 def apply_filters(
     query,
