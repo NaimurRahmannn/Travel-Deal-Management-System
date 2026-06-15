@@ -56,6 +56,22 @@ def update_deal(deal_id, data):
 
     return deal, None
 
+def delete_deal(deal_id):
+    deal = TravelManagement.query.get(deal_id)
+    if not deal:
+        return False, "not_found"
+
+    try:
+        # Remove related views before deleting
+        RecentView.query.filter_by(deal_id=deal.id).delete()
+        db.session.delete(deal)
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
+        return False, "Could not delete the deal, please try again"
+
+    return True, None
+
 #shared filtering helper
 def apply_filters(
     query,
