@@ -60,3 +60,17 @@ class RecentView(db.Model):
             "deal_id": self.deal_id,
             "viewed_at": self.viewed_at.isoformat() if self.viewed_at else None,
         }
+
+class DealView(db.Model):
+    __tablename__ = "deal_views"
+    id = db.Column(db.Integer, primary_key=True)
+    deal_id = db.Column(
+        db.Integer,
+        db.ForeignKey("travel_management.id"),
+        nullable=False
+    )
+    viewed_at = db.Column(
+        db.DateTime,
+        server_default=db.func.now(),
+        nullable=False
+    )
