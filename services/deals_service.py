@@ -1,6 +1,6 @@
 from sqlalchemy.exc import SQLAlchemyError
 
-from database.model import db, TravelManagement,RecentView
+from database.model import db, TravelManagement, RecentView, DealView
 from utils.validators import validate_deal
 from utils.logger import logger
 from sqlalchemy import asc, desc
@@ -56,6 +56,7 @@ def update_deal(deal_id, data):
 
     return deal, None
 
+
 def delete_deal(deal_id):
     deal = TravelManagement.query.get(deal_id)
     if not deal:
@@ -72,7 +73,8 @@ def delete_deal(deal_id):
 
     return True, None
 
-#shared filtering helper
+
+# shared filtering helper
 def apply_filters(
     query,
     destination=None,
@@ -103,6 +105,7 @@ def search_deals(destination=None, platform=None, travel_type=None):
     )
     return query.all()
 
+
 def filter_deals_by_budget(min_price=None, max_price=None):
     query = apply_filters(
         TravelManagement.query,
@@ -111,11 +114,11 @@ def filter_deals_by_budget(min_price=None, max_price=None):
     )
     return query.all()
 
+
 def sort_deals(sort_by, order):
     column = getattr(TravelManagement, sort_by)
     direction = asc(column) if order == "asc" else desc(column)
     return TravelManagement.query.order_by(direction).all()
-
 
 
 def track_recent(deal):
@@ -128,6 +131,8 @@ def track_recent(deal):
     except SQLAlchemyError:
         db.session.rollback()
         logger.warning(f"Could not track recent view for deal {deal.id}")
+    log_view_event(deal.id)
+
 
 def get_recent_deals():
     recents = RecentView.query.order_by(RecentView.viewed_at.desc()).limit(10).all()
@@ -138,3 +143,11 @@ def get_recent_deals():
             deals.append(deal.to_dic())
     return deals
 
+
+def log_view_event(deal_id):
+    try:
+        db.session.add(DealView(deal_id=deal_id))
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
+        logger.warning(f"Could not log view event for deal {deal_id}")
