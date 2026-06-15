@@ -9,7 +9,8 @@ from services.deals_service import (
     get_recent_deals,
     track_recent,
     update_deal,
-    delete_deal
+    delete_deal,
+    get_popular_deals
 )
 from utils.logger import logger
 from utils.validators import parse_price, validate_price_range, validate_sort_params
@@ -167,4 +168,10 @@ def sort():
 def recent():
     logger.info("Recent deals requested")
     deals = get_recent_deals()
+    return jsonify({"count": len(deals), "results": deals}), 200
+
+@deals_bp.route("/popular", methods=["GET"])
+def popular():
+    logger.info("Popular deals requested")
+    deals = get_popular_deals()
     return jsonify({"count": len(deals), "results": deals}), 200

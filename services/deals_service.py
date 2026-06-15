@@ -172,3 +172,4 @@ def get_popular_deals(limit=10):
             data["views"] = views
             results.append(data)
     return results
+
