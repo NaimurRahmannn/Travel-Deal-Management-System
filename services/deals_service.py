@@ -3,7 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from database.model import db, TravelManagement, RecentView, DealView
 from utils.validators import validate_deal
 from utils.logger import logger
-from sqlalchemy import asc, desc
+from sqlalchemy import asc, desc,func
 
 
 def create_deal(data):
@@ -151,3 +151,24 @@ def log_view_event(deal_id):
     except SQLAlchemyError:
         db.session.rollback()
         logger.warning(f"Could not log view event for deal {deal_id}")
+
+        
+def get_popular_deals(limit=10):
+    rows = (
+        db.session.query(
+            DealView.deal_id,
+            func.count(DealView.id).label("views")
+        )
+        .group_by(DealView.deal_id)
+        .order_by(func.count(DealView.id).desc())
+        .limit(limit)
+        .all()
+    )
+    results = []
+    for deal_id, views in rows:
+        deal = TravelManagement.query.get(deal_id)
+        if deal:
+            data = deal.to_dic()
+            data["views"] = views
+            results.append(data)
+    return results
