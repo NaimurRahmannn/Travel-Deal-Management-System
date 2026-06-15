@@ -173,3 +173,8 @@ def get_popular_deals(limit=10):
             results.append(data)
     return results
 
+
+def get_most_viewed_deal():
+    deals = get_popular_deals(limit=1)
+    return deals[0] if deals else None
+

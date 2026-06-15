@@ -2,7 +2,8 @@ from flask import Flask, jsonify
 from config import Config
 from routes.deals_route import deals_bp
 from database.model import db
-from utils.stats import record_request
+from utils.stats import record_request,get_stats,most_searched_destination
+from services.deals_service import get_most_viewed_deal
 app = Flask(__name__)
 
 app.config.from_object(Config)
@@ -24,6 +25,15 @@ def home():
 def count_request(response):
     record_request(success=response.status_code < 400)
     return response
+
+@app.route("/stats", methods=["GET"])
+def stats():
+    counts = get_stats()
+    return jsonify({
+        "requests": counts,
+        "most_searched_destination": most_searched_destination(),
+        "most_viewed_deal": get_most_viewed_deal(),
+    }), 200
 
 @app.errorhandler(400)
 def bad_request(_error):
