@@ -8,7 +8,8 @@ from services.deals_service import (
     sort_deals,
     get_recent_deals,
     track_recent,
-    update_deal
+    update_deal,
+    delete_deal
 )
 from utils.logger import logger
 from utils.validators import parse_price, validate_price_range, validate_sort_params
@@ -71,6 +72,25 @@ def update_single_deal(deal_id):
 
     logger.info(f"Deal {deal_id} updated")
     return jsonify(deal.to_dic()), 200
+
+
+
+@deals_bp.route("/<deal_id>", methods=["DELETE"])
+def delete_single_deal(deal_id):
+    if not deal_id.isdigit():
+        return jsonify({"error": "deal_id must be an integer"}), 400
+
+    success, error = delete_deal(int(deal_id))
+    if error == "not_found":
+        logger.warning(f"Delete failed: deal {deal_id} not found")
+        return jsonify({"error": "Deal not found"}), 404
+    if error:
+        logger.warning(f"Delete failed for deal {deal_id}: {error}")
+        return jsonify({"error": error}), 500
+
+    logger.info(f"Deal {deal_id} deleted")
+    return jsonify({"message": f"Deal {deal_id} deleted successfully"}), 200
+
 
 
 @deals_bp.route("/search", methods=["GET"])
