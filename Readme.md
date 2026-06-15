@@ -287,7 +287,7 @@ A quick note on malformed JSON: make sure your request body uses **double quotes
 
 ## Testing with Postman
 
-There's a Postman collection included in the repo (`Postman Collection.postman_collection.json`). Import it into Postman and you'll have all the endpoints ready to go, so you can try things out without typing requests by hand. A good flow to try: add a few deals, search and filter them, sort by price, open a couple by ID a few times, update and delete one, then check `/deals/recent`, `/deals/popular`, and `/stats`.
+There's a Postman collection included in the repo (`Travel_Deal_Postman_Collection.postman_collection.json`). Import it into Postman and you'll have all the endpoints ready to go, so you can try things out without typing requests by hand. A good flow to try: add a few deals, search and filter them, sort by price, open a couple by ID a few times, update and delete one, then check `/deals/recent`, `/deals/popular`, and `/stats`.
 
 ## Tech used
 

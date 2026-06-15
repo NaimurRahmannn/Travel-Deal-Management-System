@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "19bcb67b-9777-491c-8763-cbc78c11b790",
-    "name": "Postman Collection",
+    "name": "Travel_Deal_Postman_Collection",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "55862842",
     "_collection_link": "https://go.postman.co/collection/55862842-19bcb67b-9777-491c-8763-cbc78c11b790?source=collection_link"
@@ -1083,6 +1083,38 @@
           "body": "{\n    \"error\": \"order must be 'asc' or 'desc'\"\n}"
         }
       ]
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
     },
     {
       "name": "New Request",
