@@ -12,6 +12,7 @@ from services.deals_service import (
     delete_deal,
     get_popular_deals
 )
+from utils.stats import record_search
 from utils.logger import logger
 from utils.validators import parse_price, validate_price_range, validate_sort_params
 
@@ -109,7 +110,7 @@ def search():
             ),
             400,
         )
-
+    record_search(destination)
     logger.info(
         f"Search request: destination={destination},"
         f"platform={platform}, travel_type={travel_type}"
@@ -175,3 +176,4 @@ def popular():
     logger.info("Popular deals requested")
     deals = get_popular_deals()
     return jsonify({"count": len(deals), "results": deals}), 200
+
